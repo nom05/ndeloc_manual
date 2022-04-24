@@ -2,7 +2,7 @@
 This is the current manual of the NDELOC v.1.2.17 program to compute multicenter localization and delocalization indices via the real space partitionings, such as QTAIM, Hirshfeld-based and ELF schemes.
 
 ## Author and collaborators
-  - Nicolás Otero Martínez - nom05 (at) uvigo.es
+  - Nicolás Otero Martínez - nom05 (at) uvigo.es - University of Vigo
 
 ## Software employed to obtain examples
 [Chemcraft](https://chemcraftprog.com/)
