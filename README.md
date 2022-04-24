@@ -5,8 +5,12 @@ This is the current manual of the NDELOC v.1.2.17 program to compute multicenter
   - Nicolás Otero Martínez - nom05 (at) uvigo.es - University of Vigo
 
 ## Software employed to obtain examples
-[Chemcraft](https://chemcraftprog.com/)
-After that, I edited the files with [GIMP](https://www.gimp.org/).
+  1. [Gaussian09](https://gaussian.com/) suite of programs to obtain the wave function file (wfn or fchk).
+  2. FOHI partitioning withe STOCK/BRABO (see references in the manual).
+  3. Fukui program to obtain the AOMs (not yet available in GitHub).
+  4. NDELOC to compute the 6-DIs and to obtain .xyz files.
+  5. [Chemcraft](https://chemcraftprog.com/) to generate image files.
+  6. Images edited with [GIMP](https://www.gimp.org/).
 
 ## MIT license
 See corresponding file called [`LICENSE`](LICENSE) for more details.
