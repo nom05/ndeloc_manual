@@ -169,7 +169,9 @@
 					ndeloc1.f,
 					ndeloc2.f
 				\item In \emph{modules} directory:
-					quicksort.f90
+					mo\_kind.f90
+					mo\_quicksort.f90
+					mo\_utils.f90
 				\item In \emph{openmp} directory:
 					init\_par.f,
 					strategy.f
@@ -224,15 +226,17 @@ The structure and steps of the program are summarized in \autoref{fig:flowchart}
 		\includegraphics[width=.6\textwidth]{./figures/flowchart}
 		\caption{Simplified flowchart of the \programa~\versionprog~ program execution. Terminal blocks are represented by a green stadium shape, while the input/output and decision blocks correspond to blue rhomboid and yellow rhombus shapes, respectively. Last, the rectangle is used to stand for process blocks in the program. The acronyms of \acf{DI}, \acf{AOM}, \acf{BOM} and \acf{MO} are also employed in this chart.}\label{fig:flowchart}
 	\end{center}
-
 \end{figure}
 
-\section{Terms of use}
+\section{Terms of use, dependencies and license}
 %\programa~ is a free software only for academic use. For commercial use a license fee is applied.
 \programa~ is free software under MIT license. We refer to the GitHub webpage for more details about the license:
 \begin{center}
 	\texttt{\url{https://github.com/nom05/ndeloc}}
 \end{center}
+
+A small part of the program needs to use a \emph{quicksort} module to efficiently sort distances between pairs of atoms in a parallelized way. For this purpose, we have added the module called \emph{mo\_quicksort}, together with its dependencies \emph{mo\_utils} and \emph{mo\_kinds}, from the ``JAMS Fortran library'', distributed under the MIT license by Matthias Cuntz, Juliane Mai and Stephan Thober (\url{https://github.com/mcuntz/jams_fortran}).
+
 
 \section{How to cite \textsc{\programa~\versionprog}}
 \begin{itemize}
@@ -692,7 +696,7 @@ The program prints the number of permutations needed, in the case the Ponec appr
 \chapter{Output files}\label{chap:output}
 In this section we will describe the output file with the results of the coronene. While the output on screen is equivalent in any index order, two formats of output files are printed depending on the order of the (de)localization indices. Thereby, we distinguish between the output file with $N=2$ and $N>2$. Firstly, we will discuss the general case, $N>2$, in \autoref{sec:outputNgt2}, and the differences when $N=2$ (\autoref{sec:outputNeq2}).
 
-\section{Output file when the index order corresponds to $N>2$}\label{sec:outputNgt2}
+\section[Output file when $N>2$]{Output file when the index order corresponds to $N>2$}\label{sec:outputNgt2}
 In this case, we use the following input file as reference, whose atomic numbering is shown in \autoref{fig:CoroneneNumber}:
 \begin{consola}{cat coronene-6del.ndinp}
 coronene.fchk 4
@@ -808,7 +812,7 @@ Finally, the overall elapsed and the most computationally demanding partial time
 >> Elapsed time ............ 0.25 seconds
 \end{recuadro}
 
-\section{Output file when the index order corresponds to $N=2$}\label{sec:outputNeq2}
+\section[Output file when $N=2$]{Output file when the index order corresponds to $N=2$}\label{sec:outputNeq2}
 In this section we will discuss the differences between the general output file, when the index order is greater than two (\autoref{sec:outputNgt2}), and the 2-order calculation. Consider the following input file:
 \begin{consola}{cat coronene-2de-loc.ndinp}
 coronene.fchk 4
