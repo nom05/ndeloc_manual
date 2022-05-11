@@ -88,6 +88,8 @@
 			left=of aomfiles
 		] (wffile) {Read wave function file};
 		
+		\node[coordinate,above=.1cm of wffile] (fixwffile) {};
+		
 		% Sigma/pi separation request
 		\node[
 			draw,
@@ -97,7 +99,7 @@
 			minimum width=2.5cm,
 			inner sep=0,
 			right=of aomfiles
-		] (sigmapi) {$\sigma$/$\pi$ MOs?};
+		] (sigmapi) {MOs specified?};
 		
 		% Read .sg file
 		\node[
@@ -111,7 +113,7 @@
 			fill=blue!30,
 			text width=2cm,
 			right=1.8cm of sigmapi
-		] (readsg) {Read .sg file};
+		] (readsg) {Read .sg file or set by user};
 		
 		% Correct .sg file?
 		\node[
@@ -140,11 +142,11 @@
 			draw,
 			minimum width=2.5cm,
 			minimum height=1cm,
-			left=1.4cm of checksg
+			left=1.8cm of checksg
 		] (MOset) {Set of MO};
 
 		% Ghost point
-		\node[coordinate,below=1.5cm of wffile] (ghostwf) {};
+		\node[coordinate,below=2.13cm of wffile] (ghostwf) {};
 
 		% Ring perception?
 		\node[
@@ -230,7 +232,7 @@
 			minimum width=2.5cm,
 			minimum height=1cm,
 			right=of output
-		] (success) {\textbf{SUCCESSFUL CALC.}};
+		] (success) {\textbf{SUCCESSFUL CALCULATION}};
 		
 		% Arrows
 		\draw[-latex] 
@@ -241,24 +243,26 @@
 				(connect) 			edge 												(rings)
 				(DI) 				edge 												(output)
 				(output) 			edge 												(success)
-				(wffile) 			|- 	 												(ghostwf)
 				(aomfiles) 			|- 	 												(ghostwf)
 				(wffile) 			edge 												(ringperception)
-				(ghostsyntax) 		-|	 												(wffile)
 				(ghostsyntax) 		-|	 												(sigmapi);
 		\draw[-latex]
-				(syntaxinput) 		edge node[pos=0.4,fill=white,inner sep=2pt]{No}		(syntaxerror)
-				(checksg) 			edge node[pos=0.4,fill=white,inner sep=2pt]{No}		(sgerror)
-				(sigmapi) 			edge node[pos=0.4,fill=white,inner sep=2pt]{No}		(MOset)
+				(ghostsyntax) 		-|	 												(wffile);
+		\draw[-latex]
+				(syntaxinput) 		edge node[pos=0.4 ,fill=white,inner sep=2pt]{No}	(syntaxerror)
+				(checksg) 			edge node[pos=0.4 ,fill=white,inner sep=2pt]{No}	(sgerror)
+				(sigmapi) 			edge node[pos=0.4 ,fill=white,inner sep=2pt]{No}	(MOset)
 				(ringperception) 	edge node[pos=0.15,fill=white,inner sep=2pt]{No}	(goodfiles)
-				(goodfiles) 		edge node[pos=0.4,fill=white,inner sep=2pt]{No}		(fileserror);
+				(goodfiles) 		edge node[pos=0.4 ,fill=white,inner sep=2pt]{No}	(fileserror);
 		\draw[-latex] 
-				(sigmapi)			edge node[pos=0.3,fill=white,inner sep=2pt]{Yes}	(readsg)
-				(checksg) 			edge node[pos=0.3,fill=white,inner sep=2pt]{Yes}	(MOset)
-				(ringperception)	edge node[pos=0.4,fill=white,inner sep=2pt]{Yes}	(connect)
-				(goodfiles)			edge node[pos=0.4,fill=white,inner sep=2pt]{Yes}	(DI);
-		\draw 	(syntaxinput) 		edge node[pos=0.4,fill=white,inner sep=2pt]{Yes}	(ghostsyntax);
-		\draw 	(rings) 			edge 												(ghostring);
+				(sigmapi)			edge node[pos=0.3 ,fill=white,inner sep=2pt]{Yes}	(readsg)
+				(checksg) 			edge node[pos=0.3 ,fill=white,inner sep=2pt]{Yes}	(MOset)
+				(ringperception)	edge node[pos=0.4 ,fill=white,inner sep=2pt]{Yes}	(connect)
+				(goodfiles)			edge node[pos=0.4 ,fill=white,inner sep=2pt]{Yes}	(DI);
+		\draw 	(syntaxinput) 		edge node[pos=0.4 ,fill=white,inner sep=2pt]{Yes}	(ghostsyntax);
+		\draw 	(rings) 			edge 												(ghostring)
+				(wffile)			edge												(ghostwf)
+				(MOset)				edge												(ghostwf);
 
 		% Text and nodes:
 		% * (start) {START};
@@ -268,6 +272,7 @@
 		% * (syntaxerror) {END WITH ERROR 1};
 		% * (aomfiles) {Read AOM/BOM files};
 		% * (wffile) {Read wave function file};
+		% * (fixwffile) {};
 		% * (sigmapi) {$\sigma$/$\pi$ MOs?};
 		% * (readsg) {Read .sg file};
 		% * (checksg) {Correct .sg file?};

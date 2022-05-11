@@ -105,18 +105,20 @@
 
 %\begin{OnehalfSpace} % Use to begin double line spacing
 
+\acresetall
+
 \chapter{\programa~ scheme and software}
 
 % Fixed width box
 \nota{This document is a short guide to use \programa, a program developed as a parallelized computation of $N$-center electron (de)localization (localization and delocalization) indices, in which $N \ge 2$, and the ``centers'' represent atoms or regions obtained from a molecular real space partitioning (such as \acs{QTAIM}, \acs{ELF} and Hirshfeld-based approaches). These indices are currently employed as a criterion to study chemical challenges related to concepts like bond orders, pericyclic reactions, 3-center 2-electron bonds (such as the \ce{B2H6} ``banana bonds'') and, especially, aromaticity.}
 
 \section{Scheme of the program}
-\programa~ is a software designed to perform computations of multicenter (or $N$-center) electron localization and delocalization indices in a parallelized and efficient way from real space partitionings, such as \ac{QTAIM}\autocite{bader1994atoms}, \ac{ELF}\autocite{simplemeasureelectronBE1990,ElectronLocalizationSolidSJF1992} and Hirshfeld-based\autocite{BondedatomfragmentsHirshfeld1977,CriticalanalysisextensionBAA2007,ExtensionHirshfeldMethodGKB2011} approaches. However, the program could compute any atomic partitioning in which an \ac{AOM} were computable by means of the combination with \textsc{Fukui} program. Among the different features of the program, we highlight:
+\programa~ is a software designed to perform computations of multicenter (or $N$-center) electron localization and delocalization indices in a parallelized and efficient way from real space partitionings, such as \ac{QTAIM}\autocite{bader1994atoms}, \ac{ELF}\autocite{simplemeasureelectronBE1990,ElectronLocalizationSolidSJF1992} and Hirshfeld-based\autocite{BondedatomfragmentsHirshfeld1977,CriticalanalysisextensionBAA2007,ExtensionHirshfeldMethodGKB2011} approaches. However, the program could compute any atomic partitioning in which an \acp{AOM} were computable by means of the combination with \textsc{Fukui} program. Among the different features of the program, we highlight:
 \begin{itemize}
 	\item It supports several wave function file formats to carry out the calculations: wfn, fchk and molden.
 	\item It is parallelized with different strategies, choosing the most adequate one according to the kind of calculation.
 	\item Together with a detailed output file, the program can print a .xyz file with the $N$-delocalization indices\footnote{This option is only available when the index order is $N>2$} compatible with Chemcraft, a graphical program for visualization of quantum chemistry computations (\url{https://chemcraftprog.com/}).
-	\item It is able to compute a specific set of \acp{MO} defined by the user, as well as several predefined presets ($\pi$, $\sigma$ and outer shell \acp{MO}).
+	\item It is able to compute a specific set of \acfp{MO} defined by the user, as well as several predefined presets ($\pi$, $\sigma$ and outer shell \acp{MO}).
 	\item Multideterminental \ac{AOM} are supported via natural orbitals to obtain approximate $N$-center (de)localization indices.\footnote{Keep in mind the property of idempotence is not accomplished in the case of post-HF calculation.}
 	\item Easily expandable to increase the computable order of the $N$-center (de)localization indices. The program includes up to \num{14}.\footnote{Do not forget the computational resources scaling, explained in \autoref{chap:cost}.}
 	\item It is able to use a basic ring perception algorithm.
@@ -129,7 +131,7 @@
 	\item Operating systems: Any with Fortran (compilers), CMake and OpenMP.
 	\item List of source files:
 			\begin{itemize}
-				\item In root directory:
+				\item In root (``./'') directory:
 					ndeloc.f,
 					goon.f
 				\item In \emph{calc} directory:
@@ -230,13 +232,14 @@ The structure and steps of the program are summarized in \autoref{fig:flowchart}
 
 \section{Terms of use, dependencies and license}
 %\programa~ is a free software only for academic use. For commercial use a license fee is applied.
-\programa~ is free software under MIT license. We refer to the GitHub webpage for more details about the license:
+\programa~ is free software under GPLv3 license. We refer to the GitHub web page for more details about the license:
 \begin{center}
 	\texttt{\url{https://github.com/nom05/ndeloc}}
 \end{center}
 
 A small part of the program needs to use a \emph{quicksort} module to efficiently sort distances between pairs of atoms in a parallelized way. For this purpose, we have added the module called \emph{mo\_quicksort}, together with its dependencies \emph{mo\_utils} and \emph{mo\_kinds}, from the ``JAMS Fortran library'', distributed under the MIT license by Matthias Cuntz, Juliane Mai and Stephan Thober (\url{https://github.com/mcuntz/jams_fortran}).
 
+\nota{This manual is open source under a MIT license. We refer to the GitHub web page for more details about the license \url{https://github.com/nom05/ndeloc_manual}}
 
 \section{How to cite \textsc{\programa~\versionprog}}
 \begin{itemize}
@@ -267,7 +270,7 @@ The first version of the current program was developed for this work:
 %				  ]
 
 \chapter[Theor. background and units]{Theoretical background and units employed in \programa}\label{chap:teo}
-The electron $N$-center (or multicenter) delocalization indices, ($\varDelta_N$), represent a measure of how many electrons can be delocalizated or shared among several atomic regions with respect to a null Fermi hole density, whereas their localization counterpart symbolize how many electrons belong to a single atom. Therefore, they former ones can be also negative in certain conditions. The (de)localization (localization and delocalization) indices implemented in \programa~ program follow the \acs{QTAIM}-based scheme implementation of prof. Mandado\autocite{QTAIMncenterdelocalizationMGM2007,ChemicalgraphtheoryMGM2007}\footnote{In spite of the fact this scheme was implemented in the real space \ac{QTAIM} framework, it is general and applicable to other real space partitionings such as \ac{ELF} and Hirshfeld-based approaches.} via the \ac{GPA}\autocite{MulticenterbondindicesBPD2005}. The Ponec's $\varDelta_N$ can be divided into $\alpha$ ($\varDelta^{\alpha}_N$) and $\beta$ ($\varDelta^{\beta}_N$) components:
+The electron $N$-center (or multicenter) delocalization indices, ($\varDelta_N$), represent a measure of how many electrons can be delocalizated or shared among several atomic regions with respect to a null Fermi hole density, whereas their localization counterparts symbolize how many electrons belong to a single atom. Therefore, the former ones can be also negative in certain conditions. The (de)localization (localization and delocalization) indices implemented in \programa~ follow the \acs{QTAIM}-based scheme implementation\footnote{This scheme was implemented in the real space \ac{QTAIM} framework, but it is general and applicable to other real space partitionings such as \ac{ELF} and Hirshfeld-based approaches.} of prof. Mandado\autocite{QTAIMncenterdelocalizationMGM2007,ChemicalgraphtheoryMGM2007} via the \ac{GPA}\autocite{MulticenterbondindicesBPD2005}. The Ponec $\varDelta_N$ can be separated into $\alpha$ ($\varDelta^{\alpha}_N$) and $\beta$ ($\varDelta^{\beta}_N$) components:
 \begin{equation}
 	\varDelta_N = \varDelta^{\alpha}_N + \varDelta^{\beta}_N
 \end{equation}
@@ -299,22 +302,22 @@ Note that the summation runs over all $\alpha$ spin orbitals but a selection can
 
 Finally, it is also important to highlight that, for the \ac{KS} formalism, the monodeterminental wave function is an idempotent approximation from the real wave function, though reasonably good with respect to the correct \ac{DFT} indices\autocite{calculationelectronlocalizationPSD2002}.\\[.5cm]
 
-\nota{If not stated otherwise, \programa~ program outputs its results in atomic units (electrons) and angstroms (\si{\angstrom}) for populations and distances, respectively.}
+\nota{If not stated otherwise, the \programa~ program outputs its results in atomic units (electrons) and angstroms (\si{\angstrom}) for populations and distances, respectively.}
 
 \chapter{Computational cost}\label{chap:cost}
-The computational cost of real space \acp{DI} depends on the number of occupied \acp{MO} defined by the user and scales via the power of the index order. In addition, the program performs two kinds of delocalization indices, Giambiagi's and Ponec's approaches. The former does not include the permutation operator and the user needs to know the correct connectivity of the ring to specify the right order of atoms (we will see a workaround to avoid user interaction in \autoref{sec:line5} on \autopageref{sec:line5}).
+The computational cost of real space \acp{DI} depends on the number of occupied \acp{MO} defined by the user and scales via the power of the index order. In addition, the program performs two kinds of delocalization indices, using the definitions of Giambiagi and Ponec. The former does not include the permutation operator and the user needs to know the correct connectivity of the ring to specify the right order of atoms (we will see a workaround to avoid user interaction in \autoref{sec:line5} on \autopageref{sec:line5}).
 
-When the permutation operator is considered, the calculation will be obtained through the Ponec's approach, and $(N-1)!$ permutations will be used for each ring calculation in the molecule.
+When the permutation operator is considered, the calculation will be obtained through Ponec's formulation, and $(N-1)!$ permutations will be used for each ring calculation in the molecule.
 
-For example, consider the coronene molecule with 78 occupied \acp{MO}. The all-\ac{MO} Giambiagi 6-\ac{DI} calculation will perform $78^6$ products (per ring), that is, the huge amount of \SI{225199600704}{products}. What's more, this value is multiplied by $(6-1)!=120$ with the Ponec's approach, \emph{i.e.}, \SI{27023952084480}{products} are computed. These astronomical values (imagine larger systems) can be substantially reduced with a truncated set of \acp{MO} like in $\pi$-aromatic systems.
+For example, consider the coronene molecule with 78 occupied \acp{MO}. The all-\ac{MO} Giambiagi 6-\ac{DI} calculation will perform $78^6$ products (per ring), that is, the huge amount of \SI{225199600704}{products}. What's more, this value is multiplied by $(6-1)!=120$ with Ponec's approach, \emph{i.e.}, \SI{27023952084480}{products} are computed. These astronomical values (imagine larger systems) can be substantially reduced with a truncated set of \acp{MO} like in $\pi$-aromatic systems.
 
-\chapter{Program installation}
+\chapter{Program compilation}
 % Fixed width box
 \nota{\textbf{NOTE:} The preferred platform or, more specifically, the platform the developers use is GNU/Linux. MS Windows is an untested alternative. Through WSL or WSL2 the compilation would be equivalent to the following instructions. It is beyond the scope of this manual to explain how to activate these options in MS Windows.}
 
-The program source code will be available in \colorbox{red}{\url{https://github.com/nom05/ndeloc} **HACER PÚBLICO EL REPOSITORIO}. To install the program, follow the instructions:
+The program source code will be available in \url{https://github.com/nom05/ndeloc}. To install the program, follow the instructions:
 \begin{enumerate}
-	\item Clone firstly the repository:
+	\item Clone the repository:
 		\begin{consola}{git clone github.com/nom05/ndeloc}
 Cloning into 'ndeloc'...
 remote: Enumerating objects: 155, done.
@@ -398,7 +401,11 @@ Warning: Fortran 2018 deleted feature: DO termination statement which is not END
 [100%] Linking Fortran executable ndeloc.x
 [100%] Built target ndeloc.x
 \end{consola}
+The compilation messages on screen between \SIrange{7}{85}{\percent} were removed for the sake of simplicity.
+
 	\nota{TIP: To compile faster use several processor threads (increase the number of threads, \#threads) through the option ``-j\#threads''. For example, ``make -j3'' will set three (3) threads.}
+	
+	\nota{NOTE: For very large systems the user could need to edit \emph{ndeloc.param.h} to increase the maximum size of the arrays. The file includes comments to describe the meaning of the parameters.}
 	\item You will find the executable in the current compilation directory:
 	
 		\begin{tikzpicture}[spy using outlines={rectangle,very thick,magnification=1.5, connect spies}]
@@ -468,10 +475,10 @@ As you can observe in the previous execution output without arguments, the progr
 coronene.ndinp
 \end{consola}
 \comando{./ndeloc.x coronene}
-In the \autoref{chap:input} we will discuss about the different options of \programa.
+In \autoref{chap:input} the different options of \programa will be described.
 
 \chapter{Input file}\label{chap:input}
-As mentioned in \autoref{chap:run}, \programa~ needs an input file with ``.ndinp'' extension. The main feature of the input file is that the different options are classify by ``thematic'' lines and, \underline{at least six (6)} lines has to be included in any \programa~ input file. In the following subsections, we will explain the available options.
+As mentioned in \autoref{chap:run}, \programa~ needs an input file with the ``.ndinp'' extension. The main feature of the input file is that the different options are classified by ``thematic'' lines and, \underline{at least six (6)} lines have to be included in any \programa~ input file. In the following subsections, we will explain the available options.
 
 \section{Line 1: wave function file, number of threads and debug options}\label{sec:line1}
 \begin{recuadro}{Summary of options for Line 1:}
@@ -483,7 +490,7 @@ o Line 1 :  WFN/FCHK file with extension+# threads+debug
  *  # threads to be used through OpenMP.
  *  debug  -> debug mode is set.
 \end{recuadro}
-In the first line of the input file, the user specifies the wave function file, the number of processors and, if necessary, the ``debug'' flag, respecting this command order and each option separated by a blank space with respecto to the previous one. PROAIMS, Gaussian formatted checkpoint and molden files are supported and the extension is mandatory for each file. The number of threads must be of integer kind. \emph{debug} will print a very detailed information of the steps the program is carrying out.
+In the first line of the input file, the user specifies the wave function file, the number of processors and, if necessary, the ``debug'' flag, respecting this command order and each option separated by a blank space with respect to the previous one. PROAIMS, Gaussian formatted checkpoint and molden files are supported and the extension is mandatory for each file. The number of threads must be of integer kind. \emph{debug} will print very detailed information of the steps the program is carrying out.
 \begin{myexample}{Calculation using a coronene PROAIMS wave function file and \SI{8}{threads}}
 	coronene.wfn 8
 \end{myexample}
@@ -497,14 +504,14 @@ o Line 2 :  OUTPUT          specification:
 \end{recuadro}
 In the second line of the input file, the user controls the output specification. The main file is where the program prints all the calculation details, the rings detected (if requested) and the results. The extension of the output file is added automatically and the program will never overwrite an existent file, since it will rename the old one (adding an extra extension by means of the command ``date +\%g\%+m\%d\%H\%M\%S'') and will stop with a warning message. In \autoref{chap:output} you will find more information about the structure of this output file.
 
-The .xyz output files are generated whether the ``ring'' option is set in Line~5 (see \autoref{sec:line5} for more details) and the order of the (de)localization indices is greater than \num{2} in Line~4 (see \autoref{sec:line4}). The file names will be generated according to the main output file name and adding ``-ndel$N$-\emph{approach}.xyz'' suffix, where $N$ is the index order and \emph{approach} only has two possible texts, ``gia'' and ``pon'', for Giambiagi and Ponec approaches, respectively. Therefore, the program will generate two .xyz files and uniquely one with the Giambiagi approach if this option is enabled in Line~4 (see \autoref{sec:line4}).
+The .xyz output files are generated whether the ``ring'' option is set in Line~5 (see \autoref{sec:line5} for more details) and the order of the (de)localization indices is greater than \num{2} in Line~4 (see \autoref{sec:line4}). The file names will be generated according to the main output file name and adding the ``-ndel$N$-\emph{approach}.xyz'' suffix, where $N$ is the index order and \emph{approach} only has two possible texts, ``gia'' and ``pon'', for Giambiagi and Ponec approaches, respectively. Therefore, the program will generate two .xyz files by default, but one specifically if Giambiagi's definition is enabled in Line~4 (see \autoref{sec:line4}).
 
-The .xyz files contain the element symbols and Cartesian coordinates in \si{\angstrom} of each atom, and one line per detected ring. In this (these) line(s), \programa~ includes the symbol of a ghost atom (\ce{X}), the Cartesian coordinates of the ring geometrical center and a extra column including the corresponding delocalization value. This .xyz file can be opened with Chemcraft (\url{https://chemcraftprog.com/}) to visualize the delocalization indices. Note that the values are in atomic units and multiplied by \num{e-4} and \num{e-3} for the Giambiagi and Ponec approaches, respectively.
+The .xyz files contain the element symbols and Cartesian coordinates in \si{\angstrom} of each atom, and one line per detected ring. In this (these) line(s), \programa~ includes the symbol of a ghost atom (\ce{X}), the Cartesian coordinates of the ring geometrical center and an extra column including the corresponding delocalization value. This .xyz file can be opened with Chemcraft (\url{https://chemcraftprog.com/}) to visualize the delocalization indices. Note that the values are in atomic units and multiplied by \num{e-4} and \num{e-3} for the Giambiagi and Ponec approaches, respectively.
 \begin{myexample}{Choosing the output file name and activating the generation of xyz output files}
 	coronene-6del xyz
 \end{myexample}
 
-\section{Line 3: \acp{MO} set and post-HF \acp{AOM} scaling}\label{sec:line3}
+\section[Line 3: \acsp{MO} set and post-HF \acsp{AOM} scaling]{Line 3: \acp{MO} set and post-HF \acp{AOM} scaling}\label{sec:line3}
 \begin{recuadro}{Summary of options for Line 3}
 o Line 3 :  MO + occ        specification:
  *  all    -> All mol orbitals included.
@@ -520,15 +527,15 @@ In the third line of the input file, the user specifies the set of \acp{MO} to b
 	\item[all] The full set of \acp{MO} will be considered.
 	\item[pi] A set of \acp{MO} is read from an existent .som or .sg file.
 	\item[outersh] The number of \acp{MO} to be considered are decreased removing the $1s$ \acp{MO} of the heavy atoms.
-	\item[\emph{range}] The numbering of the \acp{MO} set is defined by means of a range spefied by hand. For instance, a range of ``1,3--5'' corresponds to use the \acp{MO} 1, 3, 4 and 5.
+	\item[\emph{range}] The numbering of the \acp{MO} set is defined by means of a range spefied by hand. For instance, a range of ``1,3--5'' corresponds to request the \acp{MO} 1, 3, 4 and 5.
 \end{labeling}
 
-With respect to the scaling of multideterminental \acp{AOM}, the label \emph{occ} activates the option. However, keep in mind Gaussian format checkpoint files do not include explicitly the occupation numbers\footnote{The occupation numbers could be calculated from the density matrix and the \ac{MO} coefficients, but this is beyond the scope of the program. On the other hand, they could be included from a Gaussian calculation in the .fchk file, replacing the \ac{MO} energies, by means of IOPs options (see Gaussian IOPs reference). Anyway, this last possibility is not implemented in the source code of \programa~ for the moment.} and only .wfn and .molden wave function formats can be used.
+With respect to the scaling of multideterminental \acp{AOM}, the label \emph{occ} activates the option. However, keep in mind Gaussian format checkpoint files do not include explicitly the occupation numbers\footnote{The occupation numbers could be calculated from the density matrix and the \ac{MO} coefficients, but this is beyond the scope of the program. On the other hand, they could be included from a Gaussian calculation in the .fchk file, replacing the \ac{MO} energies, by means of IOPs options (see Gaussian IOPs reference). Anyway, this last possibility is not implemented in the source code of \programa~ at the present time.} and only .wfn and .molden wave function formats can be used.
 \begin{myexample}{Defining a \acp{MO} set and activating the post-HF \acp{AOM} scaling}
 	7,10-30 occ
 \end{myexample}
 
-\section{Line 4: index order, kind of calculation, \acp{AOM}-type specification}\label{sec:line4}
+\section[Line 4: index order, kind of calculation, \acsp{AOM}-type specification]{Line 4: index order, kind of calculation, \acp{AOM}-type specification}\label{sec:line4}
 \begin{recuadro}{Summary of options for Line 4}
 o Line 4 :  N-(DE)LOC index specification and overlap matrix type:
  *  integer-> N-(DE)LOC index order.
@@ -571,13 +578,13 @@ One of the following settings must be specified:
 	\item[heavy] Only heavy atoms will be considered.
 	\item[\emph{range}] The user defines a specific set of atoms. For instance, a range of ``1,3-5'' corresponds to use the atoms 1, 3, 4 and 5.
 \end{labeling}
-Together with one of the aforementioned labels, the \programa~ program has implemented a basic ring perception algorithm, activated by the label \emph{ring} with index orders greater than two (2). It is based on the idea of creating a connectivity matrix with the set of specified atoms and iterates all the combinations to find closed cycles (rings). Do not use it with huge sets because the demands of computational resources scales very fast. By default, the program uses a maximum bond length cut-off considered for \ce{C-C} and \ce{B-N} bonds (\SI{1.6}{\angstrom}). To increase this distance, a real value can be read after the atom specification and the \emph{ring} label. If \emph{xyz} label is set in Line~2 (see \autoref{sec:line2} for more information) the program creates .xyz files including the \acp{DI} at the geometrical center of the rings.
+Together with one of the aforementioned labels, the \programa~ program has implemented a basic ring perception algorithm, activated by the label \emph{ring} with index orders greater than two (2). It is based on the idea of creating a connectivity matrix with the set of the requested atoms and the program iterates all the combinations to find closed cycles (rings). Do not use it with huge sets because the demands of computational resources scales very fast. By default, the program uses a maximum bond length cut-off considered for \ce{C-C} and \ce{B-N} bonds (\SI{1.6}{\angstrom}). To increase this distance, a real value can be read after the atom specification and the \emph{ring} label. If \emph{xyz} label is set in Line~2 (see \autoref{sec:line2} for more information) the program creates .xyz files including the \acp{DI} at the geometrical center of the rings.
 \begin{myexample}{Considering all atoms for the ring perception algorithm with a maximum bond length of \SI{1.8}{\angstrom}}
 all ring 1.8
 \end{myexample}
 The previous example could be valid for \ce{P-C} bonds, for instance.
 
-\section{Line 6 and so on: \acp{AOM}/\acp{BOM} specification}\label{sec:line6}
+\section[Line 6 and so on: \acsp{AOM}/\acsp{BOM} specification]{Line 6 and so on: \acp{AOM}/\acp{BOM} specification}\label{sec:line6}
 \begin{recuadro}{Summary of options for Line 6}
 o Line 6      : Atomic Overlap Matrices specification:
  *  read   -> Files will be read below.
@@ -594,7 +601,7 @@ o Lines 7-... : Files (if applicable).
 In the sixth and the subsequent lines, the user will specify the \ac{AOM} or \acf{BOM} format to be read by \programa. Remember the latter is only compatible with the output from Multiwfn, as explained in \autoref{sec:line4}. The program will generate the overlap matrices file names using different schemes depending on the kind of file specified. Let the reference wave function file name, the atom symbol and number be ``mol'', ``\ce{X}'' and 1, respectively. One of the following settings must be specified and the program will search for different file names:
 \begin{labeling}{aimall}
 	\item[read] The program will use the following lines of the \programa~ input file to read the \ac{AOM} file names in AIMPAC/PROAIMS format (see below). The file names can be arbitrary and must include the extension.
-	\item[int] The program will use the Bader's AIMPAC/PROAIMS format to read the files. The file names are generated and will use the following scheme: ``mol\_X01.int''.
+	\item[int] The program will use Bader's AIMPAC/PROAIMS format to read the files. The file names are generated and will use the following scheme: ``mol\_X01.int''.
 	\item[fuk] The \textsc{Fukui} output files are compatible with the AIMPAC/PROAIMS format but the file names are generated as: ``mol\_mol\_X01.fuk'' names.
 	\item[aimall] The \acp{AOM} will be obtained from the AIMAll .int files, generated as ``x1.int''.
 	\item[eloc] STOCK format will be employed. The file name will be generated as ``mol.eloc''.
@@ -615,9 +622,9 @@ pi
 heavy ring
 fuk
 \end{consola}
-In this example a Gaussian formatted checkpoint file is used as reference wave function. The calculation uses four (4) threads, and the output file name is ``coronene-6delpi.ndout'', as well as the program will generate special Chemcraft xyz files. The $\pi$-symmetric \acp{MO} set is specified, using an external file called ``coronene.som'' or ``coronene.sg''. We consider the computation of 6-\ac{DI} uniquely (localization values are not included, therefore), and the set of atoms only includes the heavy atoms, \emph{i.e.}, the carbon atoms, but the program will particularly employ the combinations forming rings.
+In this example a Gaussian formatted checkpoint file is used as reference wave function. The calculation uses four (4) threads, the output file name is ``coronene-6delpi.ndout'', and the program will generate special Chemcraft xyz files as requested. The $\pi$-symmetric \acp{MO} set is specified, using an external file called ``coronene.som'' or ``coronene.sg''. We consider the computation of 6-\ac{DI} uniquely (localization values are not included, therefore), and the set of atoms only includes the heavy atoms, \emph{i.e.}, the carbon atoms, but the program will particularly employ the combinations forming rings.
 
-Firstly, the program will print the computational details, defined in the input file, as well as some values extracted from the .fchk, .som (or .sg) and .fuk files. As can be mentioned above, four threads were specified:
+Firstly, the program will print the computational details, defined in the input file, as well as some values extracted from the .fchk, .som (or .sg) and .fuk files. As mentioned above, four threads were specified:
 \begin{recuadro}{Parallelization details}
 N D E L O C  v.1.2.17
 
@@ -659,7 +666,7 @@ The following details correspond to the number of atoms considered in the calcul
 >> Ring detection will be used <<
 >> # (de)loc indices will be calculated with ring detection <<
 \end{recuadro}
-The \acfp{AOM} will be read using the \textsc{Fukui} format. The program will check the number of digits in the atomic label (X001, by default) and will calculate the populations obtained through the \acp{MO} set we have previously specified.
+The \acfp{AOM} will be read using the \textsc{Fukui} format. The program will check the number of digits in the atomic label (X001, by default) and will calculate the populations obtained through the \acp{MO} set, which we have previously specified.
 \begin{recuadro}{Number of considered atoms and activation of ring detection}
 >> AOM File type ........ fuk
 ** Checking number of zeros in the file names
@@ -682,9 +689,9 @@ According to the computational details, \programa~ chooses a parallelization str
 >> Connec part spent .... 0.01 s
 >> # Detected rings ..... 7
 \end{recuadro}
-After obtaining a distance matrix, the program employs a sorting algorithm (\emph{quicksort}) to separate bond lengths from the rest of values. The maximum value considering an atom is bonded to another one is \SI{1.600}{\angstrom} by default, but this can be modified in Line~5 of the input file (\autoref{sec:line5}). The frontier distances are crucial to know whether the program is detecting the bonded atoms adequately. The program will print the three last pairs of bonded atoms and the next distances the program is discarding. If something were wrong, the user would observe this list (3 bonded + 2 nonbonded ones) is not accomplished. Finally, a message with the elapsed time of the ring perception algorithm and the number of rings detected by \programa~ is printed. As can be expected, the program detects the seven (7) rings of the coronene.
+After obtaining a distance matrix, the program employs a sorting algorithm (\emph{quicksort}) to separate bond lengths from the rest of values. The maximum value considering an atom is bonded to another one is \SI{1.600}{\angstrom} by default, but this can be modified in Line~5 of the input file (\autoref{sec:line5}). The frontier distances are crucial to know whether the program is detecting the bonded atoms adequately. The program will print the three last pairs of bonded atoms and the next distances the program is discarding. In case of error, the user would observe this list (3 bonded + 2 nonbonded ones) is not accomplished. Finally, a message with the elapsed time of the ring perception algorithm and the number of rings detected by \programa~ is printed. As can be expected, the program detects the seven (7) rings of coronene.
 
-The program prints the number of permutations needed, in the case the Ponec approach is used, together with a progression of the calculation. When it is finished, the program writes the output (\programa~ does not create the output file until the end) and the total elapsed time.
+The program prints the number of permutations needed, in case the Ponec approach is used, together with a progression of the calculation. When it is finished, the program writes the output (\programa~ does not create the output file until the end) and the total elapsed time.
 \begin{recuadro}{Number of Ponec's permutations, progress, message while writing the output file and total elapsed time}
 >> # Permutations ....... 120
 ** Percent complete for delocalization indices ...100.00%
@@ -694,7 +701,7 @@ The program prints the number of permutations needed, in the case the Ponec appr
 \end{recuadro}
 
 \chapter{Output files}\label{chap:output}
-In this section we will describe the output file with the results of the coronene. While the output on screen is equivalent in any index order, two formats of output files are printed depending on the order of the (de)localization indices. Thereby, we distinguish between the output file with $N=2$ and $N>2$. Firstly, we will discuss the general case, $N>2$, in \autoref{sec:outputNgt2}, and the differences when $N=2$ (\autoref{sec:outputNeq2}).
+In this section we will describe the output file with the results of coronene. While the output on screen is equivalent in any index order, two formats of output files are printed depending on the order of the (de)localization indices. Thereby, we distinguish between the output file with $N=2$ and $N>2$. Firstly, we will discuss the general case, $N>2$, in \autoref{sec:outputNgt2}, and the differences when $N=2$ (\autoref{sec:outputNeq2}).
 
 \section[Output file when $N>2$]{Output file when the index order corresponds to $N>2$}\label{sec:outputNgt2}
 In this case, we use the following input file as reference, whose atomic numbering is shown in \autoref{fig:CoroneneNumber}:
@@ -739,7 +746,7 @@ By default, the unique file generated by \programa~ uses the ``.ndout'' extensio
 	\end{figure}
 \end{center}
 
-The first part of the output file consists of a computational details summary. Concretely, the input file name the calculation comes from, the wave function file and some molecular parameters such as the wave function type (restricted or unrestricted), the number of \acp{MO}, the number of basis functions and the total number of (heavy) atoms are included here:
+The first part of the output file consists of a summary of the computational details. Concretely, the input file name the calculation comes from, the wave function file and some molecular parameters such as the wave function type (restricted or unrestricted), the number of \acp{MO}, the number of basis functions and the total number of (heavy) atoms are included here:
 \begin{recuadro}{Header, input and wave functions files together with some molecular parameters}
 +++++++++++++++++++++++++++++++++++++
         N D E L O C  v.1.2.17
@@ -761,7 +768,7 @@ Next, the \acp{MO} selected by the user in a compact way (see \autoref{sec:line3
 * LOC indices included .. NO (Available if N>2)
 * # (DE)LOC indices ..... 2 (LOC+DELOC)
 \end{recuadro}
-Moreover, the program prints how many calculations have been computed.
+Moreover, the program prints the number of calculations computed.
 
 In the case of post-HF wave functions, and if there are occupation numbers  tending to be negligible, the program will truncate the set of \acp{MO}, printing a message in the output file. If the scaling of post-HF \acp{AOM} or \acp{BOM} is activated, a message will be included as well.
 
@@ -786,7 +793,7 @@ The next step of the output file will show the \ac{AOM} or \ac{BOM} files used b
 * AOM File  10 .......... coronene_coronene_C010.fuk
 \end{recuadro}
 
-If the \emph{xyz} option is correctly set, the program will print the names of the .xyz files and the multiplication factor of the indices. Keep in mind if the calculation only includes the Giambiagi approach, only the Giambiagi approach file is generated.
+If the \emph{xyz} option is correctly set, the program will print the names of the .xyz files and the multiplication factor of the indices. Keep in mind that if the calculation only includes the Giambiagi approach, only the Giambiagi approach file is generated.
 \begin{recuadro}{.xyz output file names}
 Multiplication factors (gia,pon): 10000,1000
 * XYZ File .............. coronene-6delpi-ndel6-gia.xyz
